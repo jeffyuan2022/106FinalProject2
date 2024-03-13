@@ -15,7 +15,7 @@
     drawCombinedGraph();
   });
   ///////
-  let educationLevel = writable();
+  let educationLevel = writable(6);
 
   // Function to calculate predicted hourly wage for White individuals
   function predictWageWhite(education) {

@@ -27,30 +27,6 @@
     }
 });
 
-  function showHistPart() {
-  // switch the axis to histogram one
-  showAxis(xAxisHist);
-
-  g.selectAll('.bar-text')
-    .transition()
-    .duration(0)
-    .attr('opacity', 0);
-
-  g.selectAll('.bar')
-    .transition()
-    .duration(400)
-    .attr('width', 0);
-
-  // here we only show a bar if
-  // it is before the 15 minute mark
-  g.selectAll('.hist')
-    .transition()
-    .duration(400)
-    .attr('y', function (d) { return (d.x0 < 15) ? yHistScale(d.length) : height; })
-    .attr('height', function (d) { return (d.x0 < 15) ? height - yHistScale(d.length) : 0; })
-    .style('opacity', function (d) { return (d.x0 < 15) ? 1.0 : 1e-6; });
-}
-
   function createChart() {
       const data = Object.entries(averageIncomeByRace).map(([race, avg], index) => ({
           race,

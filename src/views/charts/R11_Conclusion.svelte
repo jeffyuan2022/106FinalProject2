@@ -3,9 +3,7 @@
     let text = ''; 
     // Break the message into an array of strings, each representing a bullet point
     const messages = [
-      "Even after accounting for numerous important covariables, ",
-      "the disparity in education return between Whites and Blacks ",
-      "remains evident. This observation gently nudges us towards a ",
+      "This observation gently nudges us towards a ",
       "deeper contemplation of the complexities behind these findings. ",
       "It suggests that beyond the quantitative measures, there might be ",
       "underlying systemic factors and societal dynamics influencing ",

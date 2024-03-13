@@ -5,9 +5,8 @@
   import { scaleBand, scaleLinear } from 'd3-scale';
   import { max } from 'd3-array';
 
-  let outjsonData = writable([]);
-  let ageLevel = writable(); // Use writable store for age
-  let educationLevel = writable(); // Add writable store for education level
+  let ageLevel = writable(18); // Use writable store for age
+  let educationLevel = writable(6); // Add writable store for education level
   let intercept = 27.2188;
   let coef_educ = 1.3843;
   let coef_race_black = -3.6740 ;
@@ -28,27 +27,14 @@
   $: predictedWageWhite = predictWageWhite($ageLevel, $educationLevel);
   $: predictedWageBlack = predictWageBlack($ageLevel, $educationLevel);
 
+  onMount(async () => {
+    drawChart();
+  });
+
   // Adjusted for new parameters and fixed education level
   function updateWagesAndDrawChart() {
           drawChart();
   }
-
-  // Updated renderLatex to include age and fixed education level in the equation
-  function renderLatex() {
-    const options = { throwOnError: false };
-    katex.render(`\\text{Predicted Wage: } Wage = ${intercept.toFixed(2)} + 
-    (${coef_educ.toFixed(2)} \\times Education)  + 
-    (${coef_race_black.toFixed(2)} \\times Black) + 
-    (${coef_educ_race_black.toFixed(2)} \\times Education \\times Black) + 
-    (${coef_age.toFixed(2)} \\times Age)`, document.getElementById('wageBlackEq_AET'), options);
-
-  }
-
-  onMount(async () => {
-    renderLatex();
-    drawChart();
-  });
-
 
   function drawChart() {
       d3.select("#chart_AET").selectAll("*").remove();
@@ -113,7 +99,7 @@ const height = svgHeight - margin.top - margin.bottom;
     .attr("x", (d) => x(d.label) + x.bandwidth() / 2)
     .attr("y", (d) => y(d.value) - 5)
     .attr("text-anchor", "middle")
-    .text((d) => d.value.toFixed(2));
+    .text((d) => `$${d.value.toFixed(2)}`);
 }
 $: {
     if ($ageLevel !== undefined && $educationLevel !== undefined) {
@@ -148,19 +134,20 @@ $: {
 {/if}
 
 {#if showContainer}
-<div class=container>
-<div>
-  <label for="ageLevel">Age:</label>
-  <input type="number" bind:value={$ageLevel} min="18" id="ageLevel" placeholder="Enter age here" />
-</div>
-<div>
-  <label for="educationLevel">Years of Education:</label>
-  <input type="number" bind:value={$educationLevel} min="0" id="educationLevel" placeholder="Enter education years here" />
-</div>
-<br>
-<div class="svg-container_AET">
-  <svg id="chart_AET" width="{svgWidth}" height="{svgHeight}"></svg>
-</div>
+<div class="container">
+  <div>
+    <label for="ageLevel">Age:</label>
+    <input type="number" bind:value={$ageLevel} min="18" id="ageLevel" placeholder="Enter age here" />
+  </div>
+  <div>
+    <label for="educationLevel">Years of Education:</label>
+    <input type="number" bind:value={$educationLevel} min="0" id="educationLevel" placeholder="Enter education years here" />
+  </div>
+  <br>
+  <div class="svg-container_AET">
+    <svg id="chart_AET" width="{svgWidth}" height="{svgHeight}"></svg>
+    <p class="text">It seems like that the difference in eudcation returns pereisits. </p>
+  </div>
 </div>
 {/if}
 
@@ -174,13 +161,10 @@ $: {
     display: block;
     margin: auto;
   }
-  .chart-text {
-    text-anchor: middle; /* Centers the text horizontally */
-    alignment-baseline: middle; /* Helps in vertical centering */
-    dominant-baseline: middle;
-    fill: black; /* Text color */
-    font-family: 'Arial', sans-serif;
-    font-size: 16px; /* Adjust based on your design */
+  .text{
+    text-align: center;
+    color: red;
+    font-weight: bold;
   }
   </style>
   

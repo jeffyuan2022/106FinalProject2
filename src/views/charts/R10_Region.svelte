@@ -6,12 +6,11 @@
     import { max } from 'd3-array';
     import { base } from '$app/paths';
   
-    let ageLevel = writable();
-    let educationLevel = writable(); 
-    let selectedRegion;
+    let ageLevel = writable(18);
+    let educationLevel = writable(6); 
+    let selectedRegion = writable("Northeast");
     let coef_age = 0.3027;
     let coef_age_educ = 0.0121;
-    let outjsonData = writable([]);
     let intercept = 33.2258; // Placeholder for intercept from the model
     let coef_educ = 3.6208; // Placeholder for education coefficient from the model
     let coef_race_black = -8.8936; // Placeholder for race (Black) coefficient from the model
@@ -45,11 +44,24 @@
         return [undefined, undefined];
     }
 }
-$: if (selectedRegion) console.log(selectedRegion);
-
-
 
     let predictedWageWhite, predictedWageBlack;
+
+    function renderLatex() {
+  const options = { throwOnError: false };
+  katex.render(`\\text{Predicted Wage: } Wage = ${intercept.toFixed(2)} + 
+  (${coef_educ.toFixed(2)} \\times Education)  + 
+  (${coef_race_black.toFixed(2)} \\times Black) + 
+  {\\color{red}{(${coef_educ_race_black.toFixed(2)} \\times Education \\times Black)}} + 
+  (${coef_age.toFixed(2)} \\times Age) +
+  (${north.toFixed(2)} \\times North) +
+    (${south.toFixed(2)} \\times South)+
+    (${west.toFixed(2)} \\times West)+
+    (${bnorth.toFixed(2)} \\times North \\times Black) +
+    (${bsouth.toFixed(2)} \\times South \\times Black) +
+    (${bwest.toFixed(2)} \\times West \\times Black)`, 
+  document.getElementById('wageBlackEq_AER'), options);
+  }
   
     // Updated function to calculate predicted hourly wage, considering fixed education level
     function predictWageWhite(age, education, region) {
@@ -67,27 +79,13 @@ $: if (selectedRegion) console.log(selectedRegion);
   
     // Adjusted for new parameters and fixed education level
     function updateWagesAndDrawChart() {
+      renderLatex()
             drawChart();
     }
   
     // Updated renderLatex to include age and fixed education level in the equation
-    function renderLatex() {
-      const options = { throwOnError: false };
-  katex.render(`\\text{Predicted Wage: } Wage = ${intercept.toFixed(2)} + (${coef_educ.toFixed(2)} \\times Education)  + 
-  (${coef_race_black.toFixed(2)} \\times Black) + 
-  (${north.toFixed(2)} \\times North) +
-  (${south.toFixed(2)} \\times South)+
-  (${west.toFixed(2)} \\times West)+
-  (${bnorth.toFixed(2)} \\times North \\times Black) +
-  (${bsouth.toFixed(2)} \\times South \\times Black) +
-  (${bwest.toFixed(2)} \\times West \\times Black)`, 
-  document.getElementById('wageBlackEq_AER'), options);
-    }
-    onMount(async () => {
-      const response = await fetch(`${base}/output.json`);
-      outjsonData.set(await response.json());
-      renderLatex();
 
+    onMount(async () => {
       drawChart();
     });
 
@@ -210,6 +208,8 @@ $: if (selectedRegion) console.log(selectedRegion);
         </select>
       </div> <div class="svg-container_AER">
         <svg id="chart_AER"></svg>
+        <p class="text">It seems like that the difference in eudcation returns pereisits. </p>
+        <div id="wageBlackEq_AER"></div>
       </div>
 </div>
 {/if}
@@ -223,5 +223,10 @@ $: if (selectedRegion) console.log(selectedRegion);
     font-family: Arial, sans-serif;
     display: block;
     margin: auto;
+  }
+  .text{
+    text-align: center;
+    color: red;
+    font-weight: bold;
   }
   </style>

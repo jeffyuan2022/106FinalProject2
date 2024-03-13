@@ -4,11 +4,9 @@
     import * as d3 from 'd3';
     import { scaleBand, scaleLinear } from 'd3-scale';
     import { max } from 'd3-array';
-    import { base } from '$app/paths';
   
-    let outjsonData = writable([]);
-    let ageLevel = writable(); // Use writable store for age
-    let educationLevel = writable(); // Add writable store for education level
+    let ageLevel = writable(18); // Use writable store for age
+    let educationLevel = writable(6); // Add writable store for education level
     let intercept = 27.2203;
     let coef_educ = 1.3645;
     let coef_race_black = -3.6891;
@@ -35,25 +33,10 @@
     function updateWagesAndDrawChart() {
             drawChart();
     }
-  
-    function renderLatex() {
-      const options = { throwOnError: false };
-        katex.render(`\\text{Predicted Wage: } Wage = ${intercept.toFixed(2)} + 
-        (${coef_educ.toFixed(2)} \\times Education)  + 
-        (${coef_race_black.toFixed(2)} \\times Black) + 
-        (${coef_educ_race_black.toFixed(2)} \\times Education \\times Black) + 
-        (${coef_age.toFixed(2)} \\times log(Age))`, document.getElementById('wageBlackEq_AES'), options);
-  
-    }
 
     onMount(async () => {
-      const response = await fetch(`${base}/output.json`);
-      outjsonData.set(await response.json());
-      renderLatex();
-
       drawChart();
     });
-
 
     function drawChart() {
         d3.select("#chart_AES").selectAll("*").remove();
@@ -165,6 +148,7 @@
   <br>
    <div class="svg-container_AES">
     <svg id="chart_AES"></svg>
+    <p class="text">It seems like that the difference in eudcation returns pereisits. </p>
   </div>
   </div>
   {/if}
@@ -179,4 +163,9 @@
       display: block;
       margin: auto;
     }
+    .text{
+    text-align: center;
+    color: red;
+    font-weight: bold;
+  }
   </style>
