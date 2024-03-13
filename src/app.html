@@ -1,12 +1,50 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+   <meta charset="utf-8" />
+   <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+   <meta name="viewport" content="width=device-width" />
+   %sveltekit.head%
+   <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css" integrity="sha384-..." crossorigin="anonymous">
+   <script defer src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+   <style>
+    /* svg { width: 100%; max-width: 960px; height: auto; }
+    .region { stroke: #000000; stroke-width: 1; }
+    .region:hover { fill: #aaaaaa; }
+    text { font-family: Arial, sans-serif; font-size: 14px; fill: #000000; }
+    .intro { padding: 20px; font-family: Arial, sans-serif; }
+    .intro h2 { color: #333; }
+    .intro p { color: #666; } */
+    #slider-container{
+     width: 100%;
+     padding: 10px 100px;
+     /* overflow: auto; */
+    }
+    ::-webkit-scrollbar {
+     width: 8px;
+     border-radius: 5rem;
+     height: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+     border-radius: 5rem;
+     background-color: #bfbfbf;
+    }
+       
+    ::-webkit-scrollbar-track {
+     border-radius: 5rem;
+     -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+     background: #e5e5e5;
+    }    
+   </style>
+  </head>
+  <body data-sveltekit-preload-data="hover">
+     <!-- <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="script.js"></script> -->
+   <!-- <div id="slider-container">
+    <input type="range" id="coefficient-slider" min="-10" max="10" step="0.01">
+   </div> -->
+   <!-- <div id="graph"></div>     -->
+     <div style="display: contents">%sveltekit.body%</div>
+ </body>
 </html>
