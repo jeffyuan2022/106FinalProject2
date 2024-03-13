@@ -10,7 +10,7 @@
     <div class="scroll-arrow">
       ↓
     </div>
-    <p class="scroll-text">Scroll left to start to explore</p>
+    <p class="scroll-text">Scroll down to start to explore</p>
   </div>
 
 </div>
@@ -32,7 +32,7 @@
   }
   .scroll-message-container {
     position: absolute; /* or absolute, depending on your layout */
-    bottom: 100px; /* Adjust as needed */
+    bottom: 20px; /* Adjust as needed */
     left: 15%; /* Center horizontally */
     transform: translateX(-50%);
     display: flex;
@@ -43,12 +43,12 @@
   }
 
   .scroll-arrow {
-    font-size: 24px; /* Adjust size as needed */
+    font-size: 30px; /* Adjust size as needed */
     margin-right: 10px; /* Space between arrow and text */
   }
 
   .scroll-text {
-    font-size: 16px; /* Adjust size as needed */
+    font-size: 24px; /* Adjust size as needed */
     color: #000000; /* Adjust color as needed */
   }
 
