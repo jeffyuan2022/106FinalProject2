@@ -1,5 +1,13 @@
 <script>
-  import App from '../components/App.svelte';
+  import Index from '../views/index.svelte';
 </script>
 
-<App />
+<main class="main">
+  <Index></Index>
+</main>
+<style>
+  .main{
+      height: 100%;
+      padding: 0px 20%;
+  }
+</style>
