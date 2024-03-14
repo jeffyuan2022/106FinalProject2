@@ -1,12 +1,11 @@
 <script>
-    import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
     import * as d3 from 'd3';
     import { scaleBand, scaleLinear } from 'd3-scale';
     import { max } from 'd3-array';
   
-    let ageLevel = writable(18); // Use writable store for age
-    let educationLevel = writable(6); // Add writable store for education level
+    let ageLevel = writable(); // Use writable store for age
+    let educationLevel = writable(); // Add writable store for education level
     let intercept = 27.2203;
     let coef_educ = 1.3645;
     let coef_race_black = -3.6891;
@@ -33,10 +32,6 @@
     function updateWagesAndDrawChart() {
             drawChart();
     }
-
-    onMount(async () => {
-      drawChart();
-    });
 
     function drawChart() {
         d3.select("#chart_AES").selectAll("*").remove();
@@ -147,7 +142,7 @@
   </div>
   <br>
    <div class="svg-container_AES">
-    <svg id="chart_AES"></svg>
+    <svg id="chart_AES" width="{svgWidth}" height="{svgHeight}"></svg>
     <p class="text">It seems like that the difference in eudcation returns pereisits. </p>
   </div>
   </div>

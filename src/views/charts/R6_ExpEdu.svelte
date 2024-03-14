@@ -10,12 +10,8 @@
 
   $: predictedWageWhite = $educationLevel * coef_educ + intercept;
   $: predictedWageBlack = ($educationLevel * coef_educ + intercept) + (coef_race_black) + ($educationLevel * coef_educ_race_black);
-
-  onMount(async () => {
-    drawCombinedGraph();
-  });
   ///////
-  let educationLevel = writable(6);
+  let educationLevel = writable();
 
   // Function to calculate predicted hourly wage for White individuals
   function predictWageWhite(education) {
@@ -26,7 +22,7 @@
   function predictWageBlack(education) {
     return intercept + coef_educ * education + coef_race_black + coef_educ_race_black * education;
   }
-  $: $educationLevel, drawCombinedGraph();
+  $: if ($educationLevel!==undefined){drawCombinedGraph()} ;
   
   function drawCombinedGraph() {
   // Clear existing graph to prevent overlap
@@ -99,9 +95,7 @@
       .attr("x", (d) => x(d.education) + x.bandwidth() / 2)
       .attr("y", (d) => y(d.wage) - 5)
       .attr("text-anchor", "middle")
-      .text((d) => d.wage.toFixed(2));
-
-
+      .text((d) => `$${d.wage.toFixed(2)}`);
 
 }
 </script>

@@ -1,12 +1,11 @@
 <script>
-  import { onMount } from 'svelte';
   import { writable } from 'svelte/store';
   import * as d3 from 'd3';
   import { scaleBand, scaleLinear } from 'd3-scale';
   import { max } from 'd3-array';
 
-  let ageLevel = writable(18); // Use writable store for age
-  let educationLevel = writable(6); // Add writable store for education level
+  let ageLevel = writable(); // Use writable store for age
+  let educationLevel = writable(); // Add writable store for education level
   let intercept = 27.2188;
   let coef_educ = 1.3843;
   let coef_race_black = -3.6740 ;
@@ -26,10 +25,6 @@
 
   $: predictedWageWhite = predictWageWhite($ageLevel, $educationLevel);
   $: predictedWageBlack = predictWageBlack($ageLevel, $educationLevel);
-
-  onMount(async () => {
-    drawChart();
-  });
 
   // Adjusted for new parameters and fixed education level
   function updateWagesAndDrawChart() {

@@ -1,14 +1,12 @@
 <script>
-    import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
     import * as d3 from 'd3';
     import { scaleBand, scaleLinear } from 'd3-scale';
     import { max } from 'd3-array';
-    import { base } from '$app/paths';
   
-    let ageLevel = writable(18);
-    let educationLevel = writable(6); 
-    let selectedRegion = writable("Northeast");
+    let ageLevel = writable();
+    let educationLevel = writable(); 
+    let selectedRegion = writable("");
     let coef_age = 0.3027;
     let coef_age_educ = 0.0121;
     let intercept = 33.2258; // Placeholder for intercept from the model
@@ -79,16 +77,8 @@
   
     // Adjusted for new parameters and fixed education level
     function updateWagesAndDrawChart() {
-      renderLatex()
-            drawChart();
-    }
-  
-    // Updated renderLatex to include age and fixed education level in the equation
-
-    onMount(async () => {
       drawChart();
-    });
-
+    }
 
     function drawChart() {
         d3.select("#chart_AER").selectAll("*").remove();
@@ -99,7 +89,7 @@
     ];
     // SVG setup
   const svgWidth = 300;
-  const svgHeight = 300;
+  const svgHeight = 250;
   const margin = {top: 40, right: 30, bottom: 70, left: 60};
   const width = svgWidth - margin.left - margin.right;
   const height = svgHeight - margin.top - margin.bottom;
@@ -153,10 +143,10 @@
       .attr("x", (d) => x(d.label) + x.bandwidth() / 2)
       .attr("y", (d) => y(d.value) - 5)
       .attr("text-anchor", "middle")
-      .text((d) => d.value.toFixed(2));
+      .text((d) => `$${d.value.toFixed(2)}`);
   }
   $: {
-      if ($ageLevel !== undefined && $educationLevel !== undefined && selectedRegion !== undefined) {
+      if ($ageLevel !== undefined && $educationLevel !== undefined && (selectedRegion !== undefined || selectedRegion !== "")) {
         updateWagesAndDrawChart();
       }
     }
@@ -165,11 +155,13 @@
 
   // Assuming dimensions for the SVG for demonstration purposes
   const svgWidth = 600; // Width of your SVG container
-  const svgHeight = 400; // Height of your SVG container
+  const svgHeight = 500; // Height of your SVG container
 
   function handleCorrectChoice() {
     showContainer = true;
     showMessage = false;
+    renderLatex()
+
   }
 
   function handleWrongChoice() {
@@ -189,6 +181,14 @@
 
 {#if showContainer}
 <div class=container>
+  <label for="region-select">Choose a Region:</label>
+  <select bind:value={selectedRegion} id="region-select">
+      <option value="">--Please choose an option--</option>
+      <option value="Northeast">Northeast</option>
+      <option value="Midwest">Midwest</option>
+      <option value="South">South</option>
+      <option value="West">West</option>
+  </select>
         <div>
         <label for="ageLevel">Age:</label>
         <input type="number" bind:value={$ageLevel} min="18" id="ageLevel" placeholder="Enter age here" />
@@ -197,19 +197,9 @@
         <label for="educationLevel">Years of Education:</label>
         <input type="number" bind:value={$educationLevel} min="0" id="educationLevel" placeholder="Enter education years here" />
       </div>
-      <div>
-        <label for="region-select">Choose a Region:</label>
-        <select bind:value={selectedRegion} id="region-select">
-            <option value="">--Please choose an option--</option>
-            <option value="Northeast">Northeast</option>
-            <option value="Midwest">Midwest</option>
-            <option value="South">South</option>
-            <option value="West">West</option>
-        </select>
-      </div> <div class="svg-container_AER">
-        <svg id="chart_AER"></svg>
+      <div class="svg-container_AER">
+        <svg id="chart_AER" width="{svgWidth}" height="{svgHeight}"></svg>
         <p class="text">It seems like that the difference in eudcation returns pereisits. </p>
-        <div id="wageBlackEq_AER"></div>
       </div>
 </div>
 {/if}

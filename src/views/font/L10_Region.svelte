@@ -54,7 +54,7 @@ onMount(async () => {
     }
     .fontBox_1{
     font-weight: 600;
-    font-size: 40px;
+    font-size: 24px;
   }    
   .fontBox_2{
     font-weight: 400;
