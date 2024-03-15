@@ -10,7 +10,7 @@
     <div class="scroll-arrow">
       ↓
     </div>
-    <p class="scroll-text">Scroll down to start to explore</p>
+    <p class="scroll-text">Scroll down at the left center to start to explore</p>
   </div>
 
 </div>

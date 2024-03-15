@@ -8,7 +8,7 @@
       <div class="scroll-arrow">
         ↓
       </div>
-      <p class="scroll-text">Scroll down to keep exploring</p>
+      <p class="scroll-text">Scroll down at the left center to keep exploring</p>
     </div> 
   </div>
   <style>
