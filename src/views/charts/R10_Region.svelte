@@ -168,6 +168,8 @@
     showContainer = false;
     showMessage = true;
   }
+
+  
   </script>
 
 <p>Please click one of the options below that you think could be a possible statistically significant covariate when predicting hourly wages:</p>
@@ -190,7 +192,7 @@
       <option value="West">West</option>
   </select>
         <div>
-        <label for="ageLevel">Age:</label>
+        <label for="ageLevel">Age: (Enter a number between 18 - 65)</label>
         <input type="number" bind:value={$ageLevel} min="18" id="ageLevel" placeholder="Enter age here" />
       </div>
       <div>

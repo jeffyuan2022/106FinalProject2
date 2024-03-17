@@ -133,7 +133,7 @@
   {#if showContainer}
   <div class=container>
   <div>
-    <label for="ageLevel">Age:</label>
+    <label for="ageLevel">Age: (Enter a number between 18 - 65)</label>
     <input type="number" bind:value={$ageLevel} min="18" id="ageLevel" placeholder="Enter age here" />
   </div>
   <div>
