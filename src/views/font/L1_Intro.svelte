@@ -1,3 +1,21 @@
+<script>
+  // You can also define the URL dynamically in the script tag
+  let websiteUrl = 'https://www.youtube.com/watch?v=kpD3i3RNhc4';
+  function handleClick(event) {
+    // Prevent default link behavior
+    event.preventDefault();
+    
+    // Log click or perform other actions
+    console.log('Link clicked!');
+
+    // Navigate to the URL
+    window.location.href = websiteUrl;
+  }
+</script>
+
+<div class="video">
+  <a href={websiteUrl} on:click={handleClick}>YouTube Demo Video</a>
+</div>
 <div class="fontBox">
   <h1 class="fontBox_1">How Does the Return on Education Influence Wage Disparities Across Different Demographics</h1>
   <div class="fontBox_2">
@@ -40,6 +58,17 @@
     justify-content: center;
     animation: bounce 2s infinite; /* Animation for the arrow */
     cursor: pointer; /* Optional, if you want to make it clickable */
+  }
+  .video {
+    position: absolute; /* or absolute, depending on your layout */
+    top: 50px; /* Adjust as needed */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* Optional, if you want to make it clickable */
+    font-size: 24px;
   }
 
   .scroll-arrow {
